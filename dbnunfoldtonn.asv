@@ -1,0 +1,22 @@
+function nn = dbnunfoldtonn(dbn, outputsize)
+%DBNUNFOLDTONN Unfolds a DBN to a NN
+%   dbnunfoldtonn(dbn, outputsize ) returns the unfolded dbn with a final
+%   layer of size outputsize added.
+    if(exist('outputsize','var'))
+        size = [dbn.sizes outputsize];
+    else
+        size = [dbn.sizes];
+    end
+    nn = nnsetup(size);
+    for i = 1 : numel(dbn.rbm)
+        nn.W{i} = [dbn.rbm{i}.c dbn.rbm{i}.W];
+    end
+     x = [ones(m,1) train_x];
+         nn.a{1} = x;
+    for i = 2 : n-1
+   
+    nn.a{i}=sigm(nn.a{n - 1} * nn.W{n - 1}');
+    nn.a{i} = [ones(m,1) nn.a{i}];
+    end
+end
+
